@@ -16,6 +16,7 @@ import config
 import news_collector
 import news_summarizer
 import buffett_loader
+import gemini_summarizer
 
 
 # Windows 콘솔 한글 출력 보장
@@ -84,6 +85,12 @@ def index():
     processed = news_summarizer.process_news(raw)
     buffett = buffett_loader.get_buffett_context()
 
+    # Gemini 종합 요약 (API 키 없거나 실패하면 None)
+    brief = gemini_summarizer.generate_brief(
+        processed.get("all_items", []),
+        force_refresh=force,
+    )
+
     now = get_kst_now()
 
     return render_template(
@@ -94,6 +101,7 @@ def index():
         headlines=processed["headlines"],
         grouped=processed["grouped"],
         pulse=processed["pulse"],
+        brief=brief,
         buffett=buffett,
         generated_at=raw.get("generated_at"),
     )

@@ -766,6 +766,151 @@ a:hover {
     border-top: 1px solid var(--rule-soft);
 }
 
+/* ============ 데일리 브리프 (AI 종합 요약) ============ */
+.brief-section {
+    position: relative;
+    background: var(--paper-clean);
+    border-top: 3px solid var(--ink);
+    border-bottom: 1px solid var(--rule-soft);
+    padding: 1.5rem 1.75rem 1.25rem;
+    margin-bottom: 3rem;
+}
+
+/* 좌측 두꺼운 잉크 마진 (신문 사설 느낌) */
+.brief-section::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 3px;
+    bottom: 0;
+    width: 4px;
+    background: var(--accent);
+}
+
+.brief-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.85rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px dashed var(--rule-soft);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.brief-label {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.brief-icon {
+    color: var(--accent);
+    font-size: 0.7rem;
+    line-height: 1;
+}
+
+.brief-tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    font-weight: 700;
+    color: var(--ink);
+    text-transform: uppercase;
+}
+
+.brief-divider {
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background: var(--ink-faint);
+}
+
+.brief-subtitle {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+.brief-meta {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+}
+
+.brief-body {
+    margin-bottom: 1rem;
+}
+
+/* 본문은 신문 사설처럼 큰 세리프, 좋은 줄간격 */
+.brief-summary {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    line-height: 1.75;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    margin-bottom: 1rem;
+    /* 첫 글자 강조 (드롭 캡) */
+    text-align: justify;
+    text-justify: inter-character;
+}
+
+/* 첫 글자를 살짝 강조 */
+.brief-summary::first-letter {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.3em;
+    color: var(--accent);
+    margin-right: 1px;
+}
+
+.brief-points {
+    list-style: none;
+    margin: 0.85rem 0 0;
+    padding: 0.85rem 0 0;
+    border-top: 1px solid var(--rule-soft);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.5rem 1.5rem;
+}
+
+.brief-points li {
+    position: relative;
+    padding-left: 1.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    font-weight: 500;
+}
+
+.brief-points li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.brief-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.75rem;
+    border-top: 1px dotted var(--rule-soft);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
 /* ============ 빈 상태 ============ */
 .empty-state {
     text-align: center;
@@ -900,6 +1045,26 @@ a:hover {
         gap: 0.85rem;
     }
 
+    .brief-section {
+        padding: 1.1rem 1.1rem 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .brief-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+    }
+
+    .brief-summary {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+
+    .brief-points {
+        grid-template-columns: 1fr;
+    }
+
     .section {
         margin-bottom: 2rem;
     }
@@ -1011,6 +1176,11 @@ a:hover {
 
     .headline-lead {
         background: linear-gradient(to right, var(--paper) 0%, var(--paper-clean) 100%);
+    }
+
+    .brief-section {
+        background: var(--paper);
+        border-top-color: var(--ink);
     }
 
     .buffett-section {

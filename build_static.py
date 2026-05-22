@@ -87,8 +87,9 @@ def build_index_html():
         sys.exit(1)
 
     # Flask 라우트를 통해 렌더링
+    # 이 안에서 Gemini 종합 요약도 자동으로 호출됨 (GEMINI_API_KEY가 있을 때)
     with app.app.test_client() as client:
-        response = client.get("/")
+        response = client.get("/?refresh=1")
         if response.status_code != 200:
             print(f"[오류] HTTP 상태 코드 {response.status_code}")
             sys.exit(1)

@@ -61,6 +61,38 @@
             {% endif %}
         </section>
 
+        <!-- 데일리 브리프 (Gemini AI 종합 요약) -->
+        {% if brief and brief.summary %}
+        <section class="brief-section">
+            <div class="brief-header">
+                <div class="brief-label">
+                    <span class="brief-icon">●</span>
+                    <span class="brief-tag">DAILY BRIEF</span>
+                    <span class="brief-divider"></span>
+                    <span class="brief-subtitle">오늘의 종합</span>
+                </div>
+                <div class="brief-meta">AI 종합 요약</div>
+            </div>
+
+            <div class="brief-body">
+                <p class="brief-summary">{{ brief.summary }}</p>
+
+                {% if brief.points %}
+                <ul class="brief-points">
+                    {% for point in brief.points %}
+                    <li>{{ point }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+
+            <div class="brief-footer">
+                <span class="brief-stats">{{ brief.news_count }}건의 뉴스 종합</span>
+                <span class="brief-model">{{ brief.model }}</span>
+            </div>
+        </section>
+        {% endif %}
+
         <!-- 빈 상태: 뉴스 0건일 때 안내 -->
         {% if total_count == 0 %}
         <section class="empty-state">

@@ -41,6 +41,8 @@ jobs:
           pip install -r requirements.txt
 
       - name: Build static site
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python build_static.py
 
       - name: Verify build output
