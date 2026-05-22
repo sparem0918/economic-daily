@@ -156,7 +156,7 @@ def generate_brief(items, force_refresh=False):
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {
             "temperature": 0.3,
-            "maxOutputTokens": 1024,
+            "maxOutputTokens": 8192,
             "responseMimeType": "application/json",
         },
     }
