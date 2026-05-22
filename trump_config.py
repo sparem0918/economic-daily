@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 """
 트럼프 임팩트 트래커 설정
 - 트럼프 언급 감지 키워드
@@ -302,4 +302,4 @@ MAX_NEWS_PER_TOPIC = 5
 # 토픽당 최대 관련주 표시 개수
 MAX_STOCKS_PER_TOPIC = 6
 # 최근 N시간 이내 뉴스만 트럼프 섹션에 포함 (기존 NEWS_HOURS_WINDOW 와 별도)
-TRUMP_NEWS_HOURS_WINDOW = 48
+TRUMP_NEWS_HOURS_WINDOW = 168
