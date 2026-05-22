@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='trump_style.css') }}">
 </head>
 <body>
     <div class="paper">
@@ -153,6 +154,9 @@
             </div>
         </section>
         {% endif %}
+
+        <!-- 트럼프 임팩트 트래커 (자체 헤더 사용, 섹션 번호 없음) -->
+        {% include '_trump_section.html' %}
 
         <!-- 버핏 체크포인트 -->
         {% if buffett.available and buffett.daily_checkpoint %}

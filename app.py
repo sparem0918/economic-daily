@@ -17,6 +17,7 @@ import news_collector
 import news_summarizer
 import buffett_loader
 import gemini_summarizer
+import trump_tracker
 
 
 # Windows 콘솔 한글 출력 보장
@@ -91,6 +92,11 @@ def index():
         force_refresh=force,
     )
 
+    # 트럼프 임팩트 트래커 (트럼프 관련 뉴스 0건이면 템플릿에서 자동 숨김)
+    trump_section = trump_tracker.build_trump_section(
+        processed.get("all_items", [])
+    )
+
     now = get_kst_now()
 
     return render_template(
@@ -103,6 +109,7 @@ def index():
         pulse=processed["pulse"],
         brief=brief,
         buffett=buffett,
+        trump_section=trump_section,
         generated_at=raw.get("generated_at"),
     )
 

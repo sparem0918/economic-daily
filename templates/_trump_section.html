@@ -1,0 +1,91 @@
+{# -------------------------------------------------------------- #}
+{# 트럼프 임팩트 트래커 섹션 (_trump_section.html)               #}
+{# newsletter.html 에서 {% include '_trump_section.html' %} 로 호출 #}
+{# 컨텍스트 변수: trump_section (trump_tracker.build_trump_section) #}
+{# -------------------------------------------------------------- #}
+
+{% if trump_section and trump_section.total_count > 0 %}
+<section class="trump-section" id="trump-impact">
+  <div class="trump-header">
+    <div class="trump-eyebrow">SPECIAL · IMPACT TRACKER</div>
+    <h2 class="trump-title">트럼프 영향</h2>
+    <p class="trump-subtitle">
+      최근 48시간 트럼프·美 행정부 관련 뉴스 {{ trump_section.total_count }}건을
+      정책·산업 토픽별로 자동 분류했습니다.
+      <span class="trump-disclaimer">관련주는 시장 통상 분류이며 매수 추천이 아닙니다.</span>
+    </p>
+  </div>
+
+  <div class="trump-topics">
+    {% for topic in trump_section.topics %}
+    <article class="trump-topic">
+      <header class="topic-header">
+        <span class="topic-icon">{{ topic.icon }}</span>
+        <div class="topic-title-block">
+          <h3 class="topic-title">{{ topic.name }}</h3>
+          <span class="topic-count">{{ topic.count }}건</span>
+        </div>
+        <p class="topic-desc">{{ topic.description }}</p>
+      </header>
+
+      {% if topic["items"] %}
+      <ul class="topic-news-list">
+        {% for it in topic["items"] %}
+        <li class="topic-news-item">
+          <a href="{{ it.link }}" target="_blank" rel="noopener noreferrer">
+            <span class="news-title">{{ it.title }}</span>
+            <span class="news-meta">
+              <span class="news-source">{{ it.source }}</span>
+              {% if it.buffett_tags %}
+              {% for tag in it.buffett_tags[:2] %}
+              <span class="buffett-tag">#{{ tag }}</span>
+              {% endfor %}
+              {% endif %}
+            </span>
+          </a>
+          {% if it.key_points %}
+          <p class="news-key-point">{{ it.key_points[0] }}</p>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+      {% if topic.stocks %}
+      <div class="topic-stocks">
+        <div class="stocks-label">관련 한국주</div>
+        <div class="stocks-grid">
+          {% for s in topic.stocks %}
+          <div class="stock-chip" title="{{ s.note }}">
+            <span class="stock-name">{{ s.name }}</span>
+            <span class="stock-code">{{ s.code }}</span>
+            <span class="stock-market">{{ s.market }}</span>
+          </div>
+          {% endfor %}
+        </div>
+        <p class="stocks-note">
+          ※ 시장 테마 분류 기준. 실제 사업 연관성·재무는 별도 확인 필요.
+        </p>
+      </div>
+      {% endif %}
+    </article>
+    {% endfor %}
+  </div>
+
+  {% if trump_section.uncategorized %}
+  <div class="trump-uncategorized">
+    <h4>기타 트럼프 관련</h4>
+    <ul>
+      {% for it in trump_section.uncategorized %}
+      <li>
+        <a href="{{ it.link }}" target="_blank" rel="noopener noreferrer">
+          {{ it.title }}
+        </a>
+        <span class="news-source">· {{ it.source }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+</section>
+{% endif %}
