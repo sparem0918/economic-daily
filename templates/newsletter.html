@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="당일 한국 경제 뉴스를 한눈에 정리한 뉴스레터. 워렌 버핏 투자 원칙 체크포인트 포함.">
+    <title>경제 데일리 · {{ date_str }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="paper">
+
+        <!-- 마스트헤드 -->
+        <header class="masthead">
+            <div class="masthead-top">
+                <div class="meta-left">
+                    <span class="edition-no">VOL. {{ generated_at[:10] if generated_at else date_str }}</span>
+                </div>
+                <div class="meta-right">
+                    <span class="time-label">{{ time_str }} KST</span>
+                    <button class="refresh-btn" onclick="window.location.href='/?refresh=1'" title="새로고침">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                    </button>
+                </div>
+            </div>
+            <h1 class="paper-title">
+                <span class="title-kr">경제 데일리</span>
+                <span class="title-en">THE ECONOMIC DAILY</span>
+            </h1>
+            <div class="masthead-bottom">
+                <div class="date-line">{{ date_str }}</div>
+                <div class="tagline">버핏의 눈으로 읽는 오늘의 경제</div>
+            </div>
+        </header>
+
+        <!-- 시장 펄스 -->
+        <section class="pulse-strip">
+            <div class="pulse-label">MARKET PULSE</div>
+            <div class="pulse-content">
+                <div class="pulse-sentiment sentiment-{{ 'up' if pulse.sentiment == '긍정 우세' else ('down' if pulse.sentiment == '부정 우세' else 'flat') }}">
+                    <span class="sentiment-dot"></span>
+                    <span class="sentiment-text">{{ pulse.sentiment }}</span>
+                </div>
+                <div class="pulse-bar">
+                    <div class="pulse-bar-fill" style="width: {{ (pulse.ratio * 100) | round(0) }}%;"></div>
+                </div>
+                <div class="pulse-numbers">
+                    <span class="num-up">▲ {{ pulse.bullish_count }}</span>
+                    <span class="num-down">▼ {{ pulse.bearish_count }}</span>
+                </div>
+            </div>
+            {% if pulse.top_keywords %}
+            <div class="trend-keywords">
+                {% for kw in pulse.top_keywords %}
+                    <span class="trend-kw">{{ kw }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </section>
+
+        <!-- 빈 상태: 뉴스 0건일 때 안내 -->
+        {% if total_count == 0 %}
+        <section class="empty-state">
+            <div class="empty-icon">📰</div>
+            <h2 class="empty-title">뉴스를 가져오지 못했습니다</h2>
+            <p class="empty-text">
+                RSS 피드에서 뉴스를 수집하지 못했습니다.<br>
+                인터넷 연결을 확인하거나, 잠시 후 다시 시도해주세요.
+            </p>
+            <ul class="empty-steps">
+                <li>네트워크 연결 상태 확인</li>
+                <li>오른쪽 위 🔄 새로고침 버튼 클릭</li>
+                <li>또는 R 키를 눌러 강제 갱신</li>
+                <li>회사·학교 네트워크라면 방화벽이 RSS를 막을 수 있습니다</li>
+            </ul>
+            <button class="empty-cta" onclick="window.location.href='/?refresh=1'">
+                다시 시도
+            </button>
+        </section>
+        {% endif %}
+
+        <!-- 메인 헤드라인 -->
+        {% if headlines %}
+        <section class="section section-headlines">
+            <div class="section-header">
+                <span class="section-num">01</span>
+                <h2 class="section-title">오늘의 헤드라인</h2>
+                <span class="section-divider"></span>
+            </div>
+
+            <div class="headlines-grid">
+                {% for item in headlines %}
+                <article class="headline-card {{ 'headline-lead' if loop.index == 1 else '' }}">
+                    <div class="headline-meta">
+                        <span class="headline-cat">{{ item.category }}</span>
+                        <span class="headline-source">{{ item.source }}</span>
+                        <span class="headline-time">{{ item.published | relative_time }}</span>
+                    </div>
+                    <h3 class="headline-title">
+                        <a href="{{ item.link }}" target="_blank" rel="noopener">{{ item.title }}</a>
+                    </h3>
+                    {% if item.key_points %}
+                    <ul class="key-points">
+                        {% for point in item.key_points %}
+                        <li>{{ point }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% if item.buffett_tags %}
+                    <div class="buffett-tags">
+                        {% for tag in item.buffett_tags %}
+                        <span class="buffett-tag">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- 버핏 체크포인트 -->
+        {% if buffett.available and buffett.daily_checkpoint %}
+        <section class="section buffett-section">
+            <div class="section-header">
+                <span class="section-num">02</span>
+                <h2 class="section-title">오늘의 버핏 체크포인트</h2>
+                <span class="section-divider"></span>
+            </div>
+
+            <div class="buffett-card">
+                <div class="buffett-quote-mark">"</div>
+                <div class="buffett-content">
+                    <div class="buffett-type">
+                        {% if buffett.daily_checkpoint.type == 'principle' %}투자 원칙{% else %}점검 질문{% endif %}
+                    </div>
+                    <h3 class="buffett-title">{{ buffett.daily_checkpoint.title }}</h3>
+                    <p class="buffett-text">{{ buffett.daily_checkpoint.content }}</p>
+                    {% if buffett.daily_checkpoint.application %}
+                    <div class="buffett-apply">
+                        <span class="apply-label">실제 적용</span>
+                        <span class="apply-text">{{ buffett.daily_checkpoint.application }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if buffett.one_liner %}
+            <div class="buffett-oneliner">{{ buffett.one_liner }}</div>
+            {% endif %}
+        </section>
+        {% endif %}
+
+        <!-- 카테고리별 뉴스 -->
+        {% set sec_num = namespace(value=2) %}
+        {% if buffett.available and buffett.daily_checkpoint %}
+            {% set sec_num.value = 3 %}
+        {% endif %}
+
+        {% for category, items in grouped.items() %}
+        <section class="section section-category">
+            <div class="section-header">
+                <span class="section-num">{{ '%02d' | format(sec_num.value) }}</span>
+                <h2 class="section-title">{{ category }}</h2>
+                <span class="section-divider"></span>
+                <span class="section-count">{{ items | length }}건</span>
+            </div>
+
+            <div class="news-list">
+                {% for item in items %}
+                <article class="news-item">
+                    <div class="news-time">
+                        <span class="time-rel">{{ item.published | relative_time }}</span>
+                        <span class="time-source">{{ item.source }}</span>
+                    </div>
+                    <div class="news-body">
+                        <h4 class="news-title">
+                            <a href="{{ item.link }}" target="_blank" rel="noopener">{{ item.title }}</a>
+                        </h4>
+                        {% if item.key_points %}
+                        <p class="news-excerpt">{{ item.key_points[0] }}</p>
+                        {% endif %}
+                        {% if item.buffett_tags %}
+                        <div class="news-tags">
+                            {% for tag in item.buffett_tags %}
+                            <span class="news-tag">· {{ tag }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+        {% set sec_num.value = sec_num.value + 1 %}
+        {% endfor %}
+
+        <!-- 점검 질문 모음 -->
+        {% if buffett.available and buffett.questions %}
+        <section class="section questions-section">
+            <div class="section-header">
+                <span class="section-num">{{ '%02d' | format(sec_num.value) }}</span>
+                <h2 class="section-title">매수 전 점검 질문</h2>
+                <span class="section-divider"></span>
+            </div>
+
+            <ol class="questions-list">
+                {% for q in buffett.questions %}
+                <li>{{ q }}</li>
+                {% endfor %}
+            </ol>
+        </section>
+        {% endif %}
+
+        <!-- 푸터 -->
+        <footer class="footer">
+            <div class="footer-row">
+                <div class="footer-block">
+                    <div class="footer-label">총 수집 건수</div>
+                    <div class="footer-value">{{ total_count }}건</div>
+                </div>
+                <div class="footer-block">
+                    <div class="footer-label">최종 갱신</div>
+                    <div class="footer-value">{{ time_str }} KST</div>
+                </div>
+                <div class="footer-block">
+                    <div class="footer-label">캐시 주기</div>
+                    <div class="footer-value">30분</div>
+                </div>
+            </div>
+            <div class="footer-sources">
+                <span class="sources-label">SOURCES</span>
+                연합뉴스 · 한국경제 · 매일경제 · 조선비즈
+            </div>
+            <div class="disclaimer">
+                본 페이지는 RSS로 수집한 공개 뉴스를 보조 도구로 정리한 자료입니다. 특정 종목의 매수·매도를 권유하지 않습니다.
+            </div>
+            <div class="footer-bottom">
+                <span>경제 데일리 · 버핏 에디션</span>
+                <span class="footer-version">v1.0</span>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // 키보드 단축키: R 키로 새로고침
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'r' || e.key === 'R') {
+                if (!e.target.matches('input, textarea')) {
+                    window.location.href = '/?refresh=1';
+                }
+            }
+        });
+
+        // 부드러운 스크롤 (섹션 번호 클릭 시 맨 위로)
+        document.querySelectorAll('.section-num').forEach(el => {
+            el.style.cursor = 'pointer';
+            el.addEventListener('click', () => {
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            });
+        });
+    </script>
+</body>
+</html>
