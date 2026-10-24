@@ -1,0 +1,406 @@
+/* ============================================================
+   트럼프 임팩트 트래커 섹션 스타일 (trump_style.css)
+   기존 style.css 와 분리. newsletter.html 의 <head> 에서
+   <link rel="stylesheet" href="static/trump_style.css"> 로 로드.
+   다크모드는 prefers-color-scheme 자동 대응.
+   ============================================================ */
+
+.trump-section {
+  margin: 2.5rem 0;
+  padding: 1.75rem 1.5rem 2rem;
+  background: linear-gradient(
+    135deg,
+    rgba(220, 38, 38, 0.04) 0%,
+    rgba(220, 38, 38, 0.01) 100%
+  );
+  border-top: 3px solid #b91c1c;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+}
+
+.trump-header {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.15);
+  padding-bottom: 1rem;
+}
+
+.trump-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: #b91c1c;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
+.trump-title {
+  font-size: 1.65rem;
+  font-weight: 900;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.01em;
+  color: #111;
+}
+
+.trump-subtitle {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #555;
+  margin: 0;
+}
+
+.trump-disclaimer {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  color: #888;
+  font-style: italic;
+}
+
+/* ---- 토픽 카드 ---- */
+.trump-topics {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .trump-topics {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.trump-topic {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-left: 3px solid #b91c1c;
+  border-radius: 3px;
+  padding: 1rem 1.1rem 1.1rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: box-shadow 0.15s ease;
+}
+
+.trump-topic:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.topic-header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  gap: 0.15rem 0.6rem;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.topic-icon {
+  grid-row: 1 / 3;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: #b91c1c;
+  align-self: center;
+}
+
+.topic-title-block {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.topic-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0;
+  color: #111;
+}
+
+.topic-count {
+  font-size: 0.72rem;
+  color: #888;
+  font-weight: 500;
+  padding: 0.05rem 0.4rem;
+  background: rgba(185, 28, 28, 0.08);
+  color: #b91c1c;
+  border-radius: 2px;
+}
+
+.topic-desc {
+  font-size: 0.78rem;
+  color: #666;
+  margin: 0;
+  grid-column: 2;
+  line-height: 1.4;
+}
+
+/* ---- 뉴스 리스트 ---- */
+.topic-news-list {
+  list-style: none;
+  margin: 0 0 0.9rem;
+  padding: 0;
+}
+
+.topic-news-item {
+  padding: 0.55rem 0;
+  border-bottom: 1px dotted rgba(0, 0, 0, 0.07);
+}
+
+.topic-news-item:last-child {
+  border-bottom: none;
+}
+
+.topic-news-item a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  text-decoration: none;
+  color: #111;
+}
+
+.topic-news-item a:hover .news-title {
+  color: #b91c1c;
+  text-decoration: underline;
+}
+
+.news-title {
+  font-size: 0.92rem;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.news-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.news-source {
+  font-size: 0.74rem;
+  color: #888;
+}
+
+.buffett-tag {
+  font-size: 0.7rem;
+  color: #2563eb;
+  background: rgba(37, 99, 235, 0.07);
+  padding: 0.05rem 0.35rem;
+  border-radius: 2px;
+}
+
+.news-key-point {
+  font-size: 0.82rem;
+  color: #555;
+  margin: 0.25rem 0 0;
+  line-height: 1.45;
+  padding-left: 0.6rem;
+  border-left: 2px solid rgba(185, 28, 28, 0.15);
+}
+
+/* ---- 관련주 그리드 ---- */
+.topic-stocks {
+  margin-top: 0.6rem;
+  padding-top: 0.7rem;
+  border-top: 1px dashed rgba(0, 0, 0, 0.08);
+}
+
+.stocks-label {
+  font-size: 0.72rem;
+  color: #888;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.stocks-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.stock-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  padding: 0.3rem 0.6rem;
+  background: #f7f5f0;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  cursor: help;
+  transition: background 0.12s ease;
+}
+
+.stock-chip:hover {
+  background: #f0ebe0;
+}
+
+.stock-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #222;
+}
+
+.stock-code {
+  font-size: 0.7rem;
+  color: #777;
+  font-family: ui-monospace, "SF Mono", Consolas, monospace;
+}
+
+.stock-market {
+  font-size: 0.65rem;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stocks-note {
+  font-size: 0.72rem;
+  color: #aaa;
+  margin: 0.5rem 0 0;
+  font-style: italic;
+}
+
+/* ---- 미분류 영역 ---- */
+.trump-uncategorized {
+  margin-top: 1.5rem;
+  padding: 0.9rem 1rem;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 3px;
+}
+
+.trump-uncategorized h4 {
+  font-size: 0.85rem;
+  margin: 0 0 0.5rem;
+  color: #666;
+  font-weight: 700;
+}
+
+.trump-uncategorized ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.trump-uncategorized li {
+  padding: 0.3rem 0;
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
+.trump-uncategorized a {
+  color: #333;
+  text-decoration: none;
+}
+
+.trump-uncategorized a:hover {
+  color: #b91c1c;
+  text-decoration: underline;
+}
+
+/* ============================================================
+   다크모드
+   ============================================================ */
+@media (prefers-color-scheme: dark) {
+  .trump-section {
+    background: linear-gradient(
+      135deg,
+      rgba(248, 113, 113, 0.06) 0%,
+      rgba(248, 113, 113, 0.02) 100%
+    );
+    border-top-color: #ef4444;
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+  .trump-header {
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+  }
+  .trump-eyebrow {
+    color: #fca5a5;
+  }
+  .trump-title {
+    color: #f5f5f5;
+  }
+  .trump-subtitle {
+    color: #bbb;
+  }
+  .trump-disclaimer {
+    color: #888;
+  }
+  .trump-topic {
+    background: #1c1c1c;
+    border-color: rgba(255, 255, 255, 0.08);
+    border-left-color: #ef4444;
+  }
+  .topic-header {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+  .topic-icon {
+    color: #fca5a5;
+  }
+  .topic-title {
+    color: #f5f5f5;
+  }
+  .topic-count {
+    background: rgba(239, 68, 68, 0.15);
+    color: #fca5a5;
+  }
+  .topic-desc {
+    color: #999;
+  }
+  .topic-news-item {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+  .topic-news-item a {
+    color: #e8e8e8;
+  }
+  .topic-news-item a:hover .news-title {
+    color: #fca5a5;
+  }
+  .news-source {
+    color: #888;
+  }
+  .buffett-tag {
+    color: #93c5fd;
+    background: rgba(96, 165, 250, 0.1);
+  }
+  .news-key-point {
+    color: #bbb;
+    border-left-color: rgba(239, 68, 68, 0.25);
+  }
+  .topic-stocks {
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+  .stocks-label {
+    color: #999;
+  }
+  .stock-chip {
+    background: #2a2a2a;
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  .stock-chip:hover {
+    background: #333;
+  }
+  .stock-name {
+    color: #e8e8e8;
+  }
+  .stock-code {
+    color: #999;
+  }
+  .stock-market {
+    color: #666;
+  }
+  .stocks-note {
+    color: #666;
+  }
+  .trump-uncategorized {
+    background: rgba(255, 255, 255, 0.03);
+  }
+  .trump-uncategorized h4 {
+    color: #999;
+  }
+  .trump-uncategorized a {
+    color: #ccc;
+  }
+  .trump-uncategorized a:hover {
+    color: #fca5a5;
+  }
+}
